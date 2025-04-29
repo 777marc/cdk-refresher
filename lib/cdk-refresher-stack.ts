@@ -1,16 +1,20 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import * as cdk from "aws-cdk-lib";
+import { Bucket } from "aws-cdk-lib/aws-s3";
+import { Construct } from "constructs";
+import { L3Bucket } from "./s3bucket/L3Bucket";
 
 export class CdkRefresherStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
+    new Bucket(this, "MyL2Bucket", {
+      lifecycleRules: [
+        {
+          expiration: cdk.Duration.days(2),
+        },
+      ],
+    });
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'CdkRefresherQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    new L3Bucket(this, "MyL3Bucket");
   }
 }
