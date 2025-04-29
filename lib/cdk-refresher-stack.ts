@@ -7,7 +7,7 @@ export class CdkRefresherStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    new Bucket(this, "MyL2Bucket", {
+    const myL2Bucket = new Bucket(this, "MyL2Bucket", {
       lifecycleRules: [
         {
           expiration: cdk.Duration.days(2),
@@ -16,5 +16,9 @@ export class CdkRefresherStack extends cdk.Stack {
     });
 
     new L3Bucket(this, "MyL3Bucket", 2);
+
+    new cdk.CfnOutput(this, "MyL3BucketName", {
+      value: myL2Bucket.bucketName,
+    });
   }
 }
