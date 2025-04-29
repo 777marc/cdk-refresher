@@ -15,6 +15,6 @@ export class CdkRefresherStack extends cdk.Stack {
       ],
     });
 
-    new L3Bucket(this, "MyL3Bucket", 3);
+    new L3Bucket(this, "MyL3Bucket", 2);
   }
 }
