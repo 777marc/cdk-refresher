@@ -4,15 +4,20 @@ import { Construct } from "constructs";
 
 export class PhotoStack extends cdk.Stack {
   private stackSuffix: string;
+  public readonly photosBucketArn: string;
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     this.initializeSuffix();
 
-    new Bucket(this, "PhotosBucket-2", {
-      bucketName: `photos-bucket-${this.stackSuffix}-pbs`,
+    const photoBucketName: string = "photos-bucket";
+
+    const photosBucket = new Bucket(this, photoBucketName, {
+      bucketName: `photos-bucket-${this.stackSuffix}-v1`,
     });
+
+    this.photosBucketArn = photosBucket.bucketArn;
   }
 
   private initializeSuffix() {

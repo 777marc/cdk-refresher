@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 import * as cdk from "aws-cdk-lib";
-import { CdkRefresherStack } from "../lib/cdk-refresher-stack";
+//import { CdkRefresherStack } from "../lib/cdk-refresher-stack";
 import { PhotoStack } from "../lib/photoStack/PhotoStack";
+import { PhotosHandlerStack } from "../lib/photoStack/PhotoHandlerStack";
 
 const app = new cdk.App();
 //new CdkRefresherStack(app, "CdkRefresherStack");
-
-new PhotoStack(app, "PhotoBucketStack");
+const photoStack = new PhotoStack(app, "PhotoStack");
+new PhotosHandlerStack(app, "PhotoHandlerStack", {
+  targetBucketArn: photoStack.photosBucketArn,
+});
